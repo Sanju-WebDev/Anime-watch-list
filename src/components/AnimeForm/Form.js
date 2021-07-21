@@ -72,7 +72,7 @@ const submitHandler = (e) => {
                 <Col md={6}>
                     <FormGroup  >
                         <Label for= "anime-mangaka">Mangaka: </Label>
-                        <Input type= "text" name= "mangaka" id= "anime-mangaka" placeholder= "Mangaka Name" value= {newEntry.mangaka} onChange= {e => changeHandler(e)} required ></Input>                
+                        <Input type= "text" name= "mangaka" id= "anime-mangaka" placeholder= "Mangaka Name" value= {newEntry.mangaka} onChange= {e => changeHandler(e)} ></Input>                
                     </FormGroup>
                 </Col>
                 <Col  md={6}>

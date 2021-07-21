@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CardDeck, CardGroup, Container, Spinner } from 'reactstrap'
 import ListItem from './ListItem'
 import { useSelector,useDispatch  } from 'react-redux'
 import LoadingOverlay from 'react-loading-overlay';
+import { fetchAnimeList } from '../../actions/animes.actions';
 
 function AnimeLists() {
 
 const dispatch = useDispatch()
 const animeListFetched = useSelector(state => state.animeList)
 const { loading, animeList, error } = animeListFetched
+useEffect(() => {
+    // dispatch(fetchAnimeList())
+}, [])
 
 // const animeList = useSelector(state => state.animeList)
 console.log(animeList)

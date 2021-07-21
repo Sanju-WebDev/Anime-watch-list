@@ -8,9 +8,11 @@ export const fetchAnimeList = () =>
         try {
             await axiosInstance.get('/animes')
                 .then(res => {
+                    console.log(res)
                     dispatch(listSuccess(res.data))
                 })
         } catch (error) {
+            console.log(error)
             dispatch(listFail(error.message ? error.message : error))
         }
     }

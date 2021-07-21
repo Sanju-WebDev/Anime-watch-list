@@ -11,13 +11,15 @@ import { ANIME_ADD_FAIL, ANIME_ADD_REQUEST, ANIME_ADD_SUCCESS, ANIME_DELETE_SUCC
         case ANIME_LIST_REQUEST: 
             return {
                 ...state, 
-                loading: true
+                loading: true, 
+                error: null, 
             }
         case ANIME_LIST_SUCCESS: 
             return {
                 ...state, 
                 animeList: action.payload, 
                 loading: false, 
+                error: null, 
             }
         case ANIME_UPDATE_SUCCESS: 
             const updatedList = state.animeList.map(each => each._id === action.payload._id ? action.payload : each)
@@ -25,13 +27,15 @@ import { ANIME_ADD_FAIL, ANIME_ADD_REQUEST, ANIME_ADD_SUCCESS, ANIME_DELETE_SUCC
                 ...state, 
                 animeList: updatedList, 
                 loading: false, 
+                error: null
             } 
         case ANIME_DELETE_SUCCESS: 
             const newList = state.animeList.filter(each => each._id != action.payload)
             return {
                 ...state, 
                 animeList: newList, 
-                loading: false,
+                loading: false, 
+                error: null, 
             }
         case ANIME_LIST_FAIL: 
             return {
@@ -55,19 +59,21 @@ export const animeAddReducer = (state= initialAnimeAdd, action) => {
        case ANIME_ADD_REQUEST: 
            return {
                ...state, 
-               loading: true
+               loading: true, 
+               error: null, 
            }
        case ANIME_ADD_SUCCESS: 
            return {
                ...state, 
                animeAdd: action.payload, 
                loading: false, 
+               error: null, 
            }
        case ANIME_ADD_FAIL: 
            return {
                ...state, 
                error: action.payload, 
-               loading: false
+               loading: false,                
            }
        default:
            return state

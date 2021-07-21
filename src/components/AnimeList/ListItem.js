@@ -26,7 +26,7 @@ const toggle = () => setModal(!modal);
                     <br />
                     <CardSubtitle tag="h4" className="">{each.genre}</CardSubtitle>                    
                     </CardBody>
-                    <img width="100%" src={each.image && each.image} alt="Card image cap" />
+                    {each.image && <img width="100%" src={each.image} alt="Card image cap" />}
                     <CardBody>
                     <CardText>{each.plot}</CardText>
                     <CardSubtitle tag="h4" className="mb-4 ">{

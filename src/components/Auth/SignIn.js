@@ -1,15 +1,24 @@
 import React, { useState } from 'react'
-import { Form, FormGroup, Label, Input, Button, Card, CardTitle, CardBody, Row, Col } from 'reactstrap'
+import { Form, FormGroup, Label, Input, Button, Card, CardTitle, CardBody, Row, Col, Spinner } from 'reactstrap'
+import axiosInstance from './../../Http'
+import { useDispatch, useSelector } from 'react-redux'
+import { signIn } from '../../actions/auth.actions'
+import { useHistory } from 'react-router'
 
 function SignIn() {
 
+const history = useHistory()
+
+const dispatch = useDispatch()
 const [signinCred, setsigninCred] = useState({
     email: '', 
     password: '', 
 })
+const auth = useSelector(state => state.auth)
 
-const submitHandler = () => {
-    
+const submitHandler = async (e) => {
+    e.preventDefault()
+    dispatch(signIn(signinCred, history))
 }
 
     return (
@@ -18,7 +27,7 @@ const submitHandler = () => {
         <Card  body className= "shadow p-3 mb-5 bg-white rounded">            
             <CardBody>
             <CardTitle><h2>Sign In</h2></CardTitle>
-            <Form className="form" onSubmit= {() => submitHandler()}>
+            <Form className="form" onSubmit= {(e) => submitHandler(e)}>
             <FormGroup>
                 <Label for="exampleEmail">Email</Label>
                 <Input
@@ -43,7 +52,7 @@ const submitHandler = () => {
                 required
                 />
             </FormGroup>
-            <Button className= "pull-right" color= "primary" size= "lg" type= "submit">Sign In</Button>
+            <Button className= "pull-right" color= "primary" size= "lg" type= "submit" disabled={auth?.loading}>{auth?.loading ?<Spinner color="light" /> : "Sign In" }</Button>
         </Form>
         </CardBody>
         <p className= "pull-right d-flex text-muted">Don't have an account ? < a href= '/signup'><span> Sign Up</span></a></p>
