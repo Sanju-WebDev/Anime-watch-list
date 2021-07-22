@@ -45,11 +45,13 @@ useEffect(() => {
                         <NavLink href="/" className= "h5">Anime List</NavLink>
                         </NavItem>                        
                     </Nav>
-                    <Nav className="mr-auto" navbar>
+                    {
+                    isAuthenticated && <Nav className="mr-auto" navbar>
                         <NavItem>
                         <NavLink href="/add-anime/" className= "h5">Add Anime</NavLink>
                         </NavItem>                        
                     </Nav>
+                    }
                     </Collapse>
                     <NavbarText>
                         {

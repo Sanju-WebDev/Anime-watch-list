@@ -29,11 +29,12 @@ import { ANIME_ADD_FAIL, ANIME_ADD_REQUEST, ANIME_ADD_SUCCESS, ANIME_DELETE_SUCC
                 loading: false, 
                 error: null
             } 
-        case ANIME_DELETE_SUCCESS: 
-            const newList = state.animeList.filter(each => each._id != action.payload)
+        case "ANIME_ADD_UPDATE": 
+            const addedList = state.animeList
+            addedList.push(action.payload)
             return {
                 ...state, 
-                animeList: newList, 
+                animeList: addedList, 
                 loading: false, 
                 error: null, 
             }

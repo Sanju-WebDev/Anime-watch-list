@@ -17,27 +17,7 @@ export const fetchAnimeList = () =>
         }
     }
 
-const listRequest = () => {
-    return {
-        type: ANIME_LIST_REQUEST, 
-    }
-}
-
-const listSuccess = (data) => {
-    return {
-        type: ANIME_LIST_SUCCESS, 
-        payload: data,
-    }
-}
-
-const listFail = (data) => {
-    return {
-        type: ANIME_LIST_FAIL, 
-        payload: data, 
-    }
-}
-
-export const addAnimeList = (newAnime) => {
+export const addAnimeList = (newAnime, history, userId) => {
     const { title, mangaka, plot, year, episodes, seasons, rating, studios, genre, selectedFile } = newAnime
     const episodesArray = episodes.split(",").map(each => Number(each))
     const studiosArray = studios.split(',')
@@ -49,17 +29,19 @@ export const addAnimeList = (newAnime) => {
                 title: title, 
                 mangaka: mangaka, 
                 plot: plot, 
-                year: parseFloat(year), 
-                episodes: episodesArray, 
-                seasons: parseFloat(seasons), 
-                rating: parseFloat(rating), 
+                // year: parseFloat(year), 
+                // episodes: episodesArray, 
+                // seasons: parseFloat(seasons), 
+                // rating: parseFloat(rating), 
                 studios: studiosArray, 
                 genre: genreArray, 
                 image: selectedFile, 
+                createdBy: userId, 
             })
                 .then(res => {
                     console.log(res)
-                    dispatch(addSuccess(res.data))
+                    dispatch(animeAddUpdate(res.data))
+                    history.push('/')
                 })
         } catch (error) {
             console.log(error.message)
@@ -81,13 +63,14 @@ export const updateAnimeList = (id, newAnime) => {
                 title: title, 
                 mangaka: mangaka, 
                 plot: plot, 
-                year: parseFloat(year), 
-                episodes: episodesArray, 
-                seasons: parseFloat(seasons), 
-                rating: parseFloat(rating), 
+                // year: parseFloat(year), 
+                // episodes: episodesArray, 
+                // seasons: parseFloat(seasons), 
+                // rating: parseFloat(rating), 
                 studios: studiosArray, 
                 genre: genreArray, 
                 image: selectedFile, 
+
             })
                 .then(res => {
                     console.log(res)
@@ -116,6 +99,52 @@ export const deleteAnime = (id) => {
             // dispatch(addFail(error.message ? error.message : error))
         }
         // dispatch(fetchAnimeList())
+    }
+}
+
+export const upVoteAnime = (id) => {
+    return async dispatch => {
+        try {
+            await axiosInstance.post(`/animes/${id}/vote`, { vote: 1 })
+                .then(res => {
+                    dispatch(updateSuccess(res.data))
+                })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+}
+
+export const downVoteAnime = (id) => {
+    return async dispatch => {
+        try {
+            await axiosInstance.post(`/animes/${id}/vote`, { vote: -1 })
+                .then(res => {
+                    dispatch(updateSuccess(res.data))
+                })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const listRequest = () => {
+    return {
+        type: ANIME_LIST_REQUEST, 
+    }
+}
+
+const listSuccess = (data) => {
+    return {
+        type: ANIME_LIST_SUCCESS, 
+        payload: data,
+    }
+}
+
+const listFail = (data) => {
+    return {
+        type: ANIME_LIST_FAIL, 
+        payload: data, 
     }
 }
 
@@ -150,6 +179,13 @@ const deleteSuccess = (id) => {
     return {
         type: ANIME_DELETE_SUCCESS, 
         payload: id, 
+    }
+}
+
+const animeAddUpdate = (data) => {
+    return {
+        type: "ANIME_ADD_UPDATE", 
+        payload: data, 
     }
 }
 

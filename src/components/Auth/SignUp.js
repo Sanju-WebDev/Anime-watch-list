@@ -104,7 +104,7 @@ const submitHandler = (e) => {
                                 <small className= "text-danger">
                                     {userData.confirmPassword && userData.confirmPassword != userData.password && "passwords must match" }
                                 </small>
-                                <Button className= "pull-right" color= "primary" size= "lg" type= "submit" disabled= {userData.confirmPassword != userData.password || userData.confirmPassword || auth.loading =='' ? true : false} >{auth.loading ? <Spinner color="light" /> : "Sign Up" } </Button>
+                                <Button className= "pull-right" color= "primary" size= "lg" type= "submit" disabled= {userData.confirmPassword != userData.password || !userData.confirmPassword || auth.loading == true ? true : false} >{auth.loading ? <Spinner color="light" /> : "Sign Up" } </Button>
                             </Form>
                     </CardBody>
                     <p className= "pull-right d-flex text-muted">Already have an account ? < a href= '/signin'><span> Sign In</span></a></p>

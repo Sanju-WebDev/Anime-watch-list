@@ -38,11 +38,11 @@ console.log(animeList)
                   }}
                 // text='Fetching List...'
                 >
-                <p style= {{ height: "100vh", background: 'rgba(0, 0, 0, 0.01'  }}></p>
+                <p style= {{ height: "90vh", background: 'rgba(255,255,255, 0.9)'  }}></p>
             </LoadingOverlay> 
             // </div>
             : 
-            <CardDeck>{
+            <CardDeck md= "3">{
                 animeList && animeList.map(each => 
                     <ListItem each= {each} key= {each._id} />
                 )

@@ -10,7 +10,6 @@ import SignIn from "./components/Auth/SignIn";
 import SignUp from "./components/Auth/SignUp";
 import decode from 'jwt-decode'
 import { signOut } from "./actions/auth.actions";
-import Headers from "./components/helpers/headers";
 // import './App.css'
 
 function App() {
@@ -26,26 +25,29 @@ useEffect(() => {
 
 useEffect(() => {
   setisAuthenticated(auth.token!=null)
-  if(auth?.token?.token) {
-    const decodedToken = decode(auth?.token?.token)
+  if(auth?.token) {
+    const decodedToken = decode(auth?.token)
     if(decodedToken.exp * 1000 < new Date().getTime()) dispatch(signOut())
   }
 },[auth])
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const GuestRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => !isAuthenticated ? ( <Component {...props} /> ) : ( <Redirect to={{ pathname: "/" }} /> ) } />
+  );
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={props => isAuthenticated ? ( <Component {...props} /> ) : ( <Redirect to={{ pathname: "/" }} /> ) } />
   );
 
   return (
     <Container >      
         <Router>
           <Header /> 
-          {/* <Headers /> */}
           <Switch> 
             <Route exact path= "/add-anime" component= {AnimeForm} />
             <Route exact path= "/" component= {AnimeLists} />
-            <PrivateRoute exact path= "/signin" component= {SignIn} />
-            <PrivateRoute exact path= "/signup" component= {SignUp} />
+            <GuestRoute exact path= "/signin" component= {SignIn} />
+            <GuestRoute exact path= "/signup" component= {SignUp} />
           </Switch>
         </Router>
     </Container>

@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addAnimeList } from '../../actions/animes.actions';
 import ReactLoading from 'react-loading';
 import FileBase from 'react-file-base64'
+import { useHistory } from 'react-router-dom'
 // import 'bootstrap/dist/css/bootstrap.css';
 
 function AnimeForm() {
 
+const history = useHistory()
 const dispatch = useDispatch()
 const animeAdd = useSelector(state => state.animeAdd)
+const auth = useSelector(state => state.auth)
 const [newEntry, setNewEntry] = useState({
     title: '',
     mangaka: '', 
@@ -50,12 +53,12 @@ const changeHandler = e => {
 const submitHandler = (e) => {
     e.preventDefault()
     console.log(newEntry)
-    dispatch(addAnimeList(newEntry))
+    dispatch(addAnimeList(newEntry, history, auth.user?._id))
 }
 
     return (
         <Row className= "mt-5">
-        <Col>
+        <Col md={{ size: 6, offset: 3 }}>
         <Card body outline color="info">
             <CardBody>
             <CardTitle tag="h1">New Anime Entry Form</CardTitle>
@@ -63,7 +66,7 @@ const submitHandler = (e) => {
             <Row form md= {12}>
                 <Col md={12}>
                     <FormGroup  >
-                        <Label for= "anime-title">Anime Name: </Label>
+                        <Label for= "anime-title" className= "asterisk">Anime Name: </Label>
                         <Input type= "text" name= "title" id= "anime-title" placeholder= "Anime Name" value= {newEntry.title} onChange= {e => changeHandler(e)} required ></Input>                
                     </FormGroup>
                 </Col>
@@ -89,20 +92,26 @@ const submitHandler = (e) => {
                         <Input type= "text" name= "genre" id= "anime-genres" placeholder= "Genre Names" value= {newEntry.genre} onChange= {e => changeHandler(e)} required></Input>                
                     </FormGroup>
                 </Col>
-                <Col  md={6}>
+                {/* <Col  md={6}>
                     <FormGroup  >
                         <Label for= "anime-year">Year Of Release: </Label>
                         <Input type= "number" name= "year" id= "anime-year" placeholder= "Release Year" value= {newEntry.year} onChange= {e => changeHandler(e)} required></Input>                
                     </FormGroup>
-                </Col>
+                </Col> */}
+                {/* <Col md={3}>
+                    <FormGroup>
+                        <Label for= "anime-seasons">No of Seasons: </Label>
+                        <Input type= "number" name= "seasons" id= "anime-seasons" placeholder= "Seasons" value= {newEntry.seasons} onChange= {e => changeHandler(e)} required></Input>
+                    </FormGroup>
+                </Col>  */}
             </Row>   
             <Row form>
-                <Col md={{ size: 4 }}>
+                {/* <Col md={{ size: 4 }}>
                     <FormGroup>
                         <Label for= "anime-rating">Anime Rating: </Label>
                         <Input type= "number" name= "rating" id= "anime-rating" placeholder= "Anime Rating(IMDB)" value= {newEntry.rating} onChange= {e => changeHandler(e)} required></Input>
                     </FormGroup>
-                </Col>
+                </Col> */}
                 <Col md={{ size: 8 }}>
                     <FormGroup>
                         <Label for= "anime-rating">Anime Banner: </Label>
@@ -120,23 +129,23 @@ const submitHandler = (e) => {
                 <Col md={12}>
                     <FormGroup>
                         <Label for= "anime-plot">Anime Plot: </Label>
-                        <Input type= "textarea" name= "plot" id= "anime-plot" placeholder= "Anime Plot" value= {newEntry.plot} onChange= {e => changeHandler(e)} required></Input>
+                        <Input type= "textarea" name= "plot" id= "anime-plot" placeholder= "Anime Plot" value= {newEntry.plot} onChange= {e => changeHandler(e)}></Input>
                     </FormGroup>
                 </Col>
             </Row>
             <Row form >
-                <Col md={3}>
+                {/* <Col md={3}>
                     <FormGroup>
                         <Label for= "anime-seasons">No of Seasons: </Label>
                         <Input type= "number" name= "seasons" id= "anime-seasons" placeholder= "Seasons" value= {newEntry.seasons} onChange= {e => changeHandler(e)} required></Input>
                     </FormGroup>
-                </Col>            
-                <Col md={9}>
+                </Col>*/}
+                {/* <Col md={9}>
                     <FormGroup>
                         <Label for= "anime-episodes">Number of Episodes in Each Season: </Label>
                         <Input type= "text" name= "episodes" id= "anime-episodes" placeholder= "Number of Episodes in Each Season" required value= {newEntry.episodes} onChange= {e => changeHandler(e)} ></Input>
                     </FormGroup>
-                </Col>
+                </Col> */}
             </Row>
             {/* <Row md= {12}>
                 <FormGroup check>
